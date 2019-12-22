@@ -2,26 +2,29 @@
 UVa Online Judge
 10611 - The Playboy Chimp problem
 Made by: Jhoan Lozano (jhoanseb)
-date: 20/12/2019
+date: 22/12/2019
 """
 from sys import stdin
 
 def solve(ladies, x):
-  finded,ans,N = False, [-1,-1], len(ladies)
+  """
+  """
+  ans, N = [-1,-1], len(ladies)
   if N>=1:
     lo,hi = 0,N
-    while lo+1!=hi and not finded:
+    while lo+1!=hi:
       mid = lo + ((hi-lo)>>1)
-      if ladies[mid] == x: 
-        finded = True
-        if mid-1>=0: ans[0]=ladies[mid-1]
-        if mid+1<N: ans[1]=ladies[mid+1]
-      elif ladies[mid] < x: 
-        lo = mid
-        if lo+1==hi: ans = [ladies[mid],ladies[mid+1] if mid+1<N else -1]  
-      else: 
-        hi = mid
-        if lo+1==hi: ans = [ladies[mid-1] if mid-1>=0 else -1,ladies[mid]]  
+      if ladies[mid] > x: hi = mid
+      else: lo = mid
+      if lo+1==hi:
+        if ladies[lo] > x: ans = [ladies[lo-1] if lo-1>=0 else -1,ladies[lo]]
+        elif ladies[lo] < x: ans = [ladies[lo],ladies[lo+1] if lo+1<N else -1]
+        else:
+          i,j = lo-1,lo+1
+          while (i>=0 and ladies[i]==x) or (j<N and ladies[j]==x):
+            if i>=0 and ladies[i] == x: i-=1
+            if j<N and ladies[j] == x: j+=1
+          ans = [ladies[i] if i>=0 else -1, ladies[j] if j<N else -1]
   return ans
 
 def main():
