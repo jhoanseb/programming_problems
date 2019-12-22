@@ -7,7 +7,10 @@ date: 22/12/2019
 from sys import stdin
 
 def solve(ladies, x):
-  """
+  """solution of the problem based on binary search.
+
+  @param ladies: heights list of the chimpanzee ladies.
+  @param x: height to consult.
   """
   ans, N = [-1,-1], len(ladies)
   if N>=1:
